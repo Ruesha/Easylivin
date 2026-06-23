@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, ImageBackground, FlatList, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, FlatList, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { useRouter } from 'expo-router'
+import { useFonts, Borel_400Regular } from '@expo-google-fonts/borel'
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,6 +18,16 @@ const Scroll = () => {
   const router = useRouter()
   const flatListRef = useRef(null)
 
+  const [fontsLoaded] = useFonts({ Borel_400Regular })
+
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#376EBD" />
+      </View>
+    )
+  }
+
   const handleScroll = (event) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width)
     setCurrentIndex(index)
@@ -30,7 +41,8 @@ const Scroll = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
+        onMomentumScrollEnd={handleScroll}
+        scrollEventThrottle={16}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ImageBackground source={item.image} style={styles.background}>
@@ -46,7 +58,7 @@ const Scroll = () => {
                   </TouchableOpacity>
 
                   <TouchableOpacity style={[styles.btn, styles.btnLight]} onPress={() => router.push('/signup')}>
-                    <Text style={[styles.btnText, { color: '#376EBD' }]}>Sign Up</Text>
+                    <Text style={[styles.btnText, { color: '#ffffff' }]}>Sign Up</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -71,6 +83,12 @@ const Scroll = () => {
 export default Scroll
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
   container: { flex: 1 },
   background: {
     width: width,
@@ -90,34 +108,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
+    fontFamily: 'Borel_400Regular',
     fontSize: 26,
-    fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
     marginBottom: 20,
   },
   btnContainer: {
-    marginTop: 30,
-    width: '100%',
-    alignItems: 'center',
-  },
+  marginTop: 500,
+  width: '100%',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: 20,
+},
   btn: {
     backgroundColor: '#376EBD',
     paddingVertical: 15,
     borderRadius: 10,
-    marginBottom: 15,
-    width: '80%',
+    marginBottom: 20,
+    width: '45%',
     alignItems: 'center',
   },
   btnLight: {
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#376EBD',
+    borderColor: '#ffffff',
+    color: 'white',
   },
   btnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+    color: '#fdfdfd',
+    fontSize: 26,
   },
   dotsContainer: {
     position: 'absolute',
