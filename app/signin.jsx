@@ -28,6 +28,7 @@ import apple from '../assets/img/apple-logo.png'
 import google from '../assets/img/google.png'
 
 
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+/
 
 
@@ -62,7 +63,7 @@ const Signin = () => {
 
 
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
 
     if(!email.trim() || !EMAIL_REGEX.test(email.trim())){
       return Alert.alert(
@@ -82,15 +83,43 @@ const Signin = () => {
 
     setSubmitting(true)
 
+    try{
 
-    // Replace with your API login
-    setTimeout(()=>{
+      const response = await fetch('https://fakestoreapi.com/users')
+
+      if(!response.ok){
+        throw new Error('Failed to reach server')
+      }
+
+      const users = await response.json()
+
+      const matchedUser = users.find(
+        (user)=>
+          user?.email?.toLowerCase() === email.trim().toLowerCase() &&
+          user?.password === password.trim()
+      )
 
       setSubmitting(false)
 
-      router.push('/home')
+      if(matchedUser){
+        router.push('/home')
+      }else{
+        Alert.alert(
+          "Invalid Credentials",
+          "Email or password is incorrect"
+        )
+      }
 
-    },500)
+    }catch(error){
+
+      setSubmitting(false)
+
+      Alert.alert(
+        "Login Failed",
+        "Something went wrong. Please try again."
+      )
+
+    }
 
   }
 

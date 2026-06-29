@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Stack } from 'expo-router'
 import React from 'react'
+import { FavoritesProvider } from '../context/FavoritesContext'
+import { ChatProvider } from '../context/ChatContext'
 
 const RootLayout = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </View>
+    <FavoritesProvider>
+      <ChatProvider>
+      <View style={{ flex: 1 }}>
+        <Stack screenOptions={{ headerShown: false }} />
+      </View>
+      </ChatProvider>
+    </FavoritesProvider>
   )
 }
 
 export default RootLayout
-
-const styles = StyleSheet.create({})
