@@ -125,7 +125,12 @@ const ChatList = () => {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#F6F7FA' },
 
-  header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },
+  header: {
+     paddingHorizontal: 20,
+      paddingTop: 12, 
+      paddingBottom: 8 ,
+      marginTop: 30
+    },
   headerTitle: { fontSize: 26, fontWeight: '700', color: NAVY },
 
   // Search bar
