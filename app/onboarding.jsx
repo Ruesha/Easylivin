@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   background: {
     width: width,
-    height: height,
+    height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   btnContainer: {
-  marginTop: 500,
   width: '100%',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
+  marginTop: 450,
   gap: 20,
 },
   btn: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnLight: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'gray',
     borderWidth: 2,
     borderColor: '#ffffff',
     color: 'white',
